@@ -4,65 +4,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA-GO | Gestão Ambiental</title>
-    <!-- Bootstrap CSS -->
+    <title>SIGA-GO | Sistema de Informação de Gestão Ambiental</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#">SIGA-GO</a>
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+                <i class="bi bi-shield-check fs-4"></i> SIGA-GO
+                <span class="badge bg-light text-success fs-6 fw-semibold">ISO 14000</span>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto gap-1">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#" onclick="showSection('dashboard')">Dashboard</a>
+                        <button class="nav-link btn btn-link text-white text-decoration-none active fw-semibold" id="nav-dashboard" onclick="showSection('dashboard')">
+                            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                        </button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('empresas')">Empresas</a>
+                        <button class="nav-link btn btn-link text-white text-decoration-none fw-semibold" id="nav-empresas" onclick="showSection('empresas')">
+                            <i class="bi bi-building me-1"></i> Empresas
+                        </button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('registros')">Registros de Impacto</a>
+                        <button class="nav-link btn btn-link text-white text-decoration-none fw-semibold" id="nav-registros" onclick="showSection('registros')">
+                            <i class="bi bi-clipboard2-data me-1"></i> Registros de Impacto
+                        </button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <!-- Alertas -->
+    <!-- Main Container -->
+    <div class="container my-4">
+        <!-- Alertas Dinâmicos -->
         <div id="alert-container"></div>
 
         <!-- Section: Dashboard -->
         <section id="dashboard" class="content-section">
-            <h2>Dashboard ISO 14000</h2>
-            <p>Resumo de conformidade ambiental das organizações do estado de Goiás.</p>
-            <div class="row mt-4">
-                <div class="col-md-4">
-                    <div class="card text-white bg-primary mb-3">
-                        <div class="card-header">Empresas Cadastradas</div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="dash-empresas">0</h5>
+            <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom">
+                <div>
+                    <h2 class="fw-bold text-success mb-1">
+                        <i class="bi bi-graph-up-arrow me-2"></i>Dashboard de Gestão Ambiental (ISO 14000)
+                    </h2>
+                    <p class="text-muted mb-0">Monitoramento analítico de insumos, resíduos e sustentabilidade no estado de Goiás.</p>
+                </div>
+                <button class="btn btn-outline-success btn-sm mt-2 mt-md-0" onclick="loadDashboard()">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Atualizar Dados
+                </button>
+            </div>
+
+            <!-- Cards de Métricas Principais -->
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card metric-card border-0 shadow-sm text-white bg-primary h-100">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-uppercase small fw-bold opacity-75">Empresas Monitoradas</span>
+                                <h3 class="display-6 fw-bold mb-0 mt-1" id="dash-empresas">0</h3>
+                            </div>
+                            <i class="bi bi-building fs-1 opacity-50"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card text-white bg-success mb-3">
-                        <div class="card-header">Registros Ambientais</div>
-                        <div class="card-body">
-                            <h5 class="card-title" id="dash-registros">0</h5>
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card metric-card border-0 shadow-sm text-white bg-success h-100">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-uppercase small fw-bold opacity-75">Registros Ambientais</span>
+                                <h3 class="display-6 fw-bold mb-0 mt-1" id="dash-registros">0</h3>
+                            </div>
+                            <i class="bi bi-journal-check fs-1 opacity-50"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card text-white bg-info mb-3">
-                        <div class="card-header">Conformidade ISO 14000</div>
-                        <div class="card-body">
-                            <h5 class="card-title">Ativo</h5>
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card metric-card border-0 shadow-sm text-white bg-info h-100">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-uppercase small fw-bold opacity-75">Índice ISO 14000</span>
+                                <h3 class="display-6 fw-bold mb-0 mt-1" id="dash-taxa-iso">0%</h3>
+                            </div>
+                            <i class="bi bi-patch-check fs-1 opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card metric-card border-0 shadow-sm text-white bg-secondary h-100">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-uppercase small fw-bold opacity-75">Água Monitorada</span>
+                                <h4 class="fw-bold mb-0 mt-1"><span id="dash-agua">0</span> L</h4>
+                            </div>
+                            <i class="bi bi-droplet-half fs-1 opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card metric-card border-0 shadow-sm text-dark bg-warning h-100">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-uppercase small fw-bold opacity-75">Energia Monitorada</span>
+                                <h4 class="fw-bold mb-0 mt-1"><span id="dash-energia">0</span> kWh</h4>
+                            </div>
+                            <i class="bi bi-lightning-charge fs-1 opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card metric-card border-0 shadow-sm text-white bg-danger h-100">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-uppercase small fw-bold opacity-75">Resíduos Perigosos</span>
+                                <h4 class="fw-bold mb-0 mt-1"><span id="dash-perigosos">0</span> kg</h4>
+                            </div>
+                            <i class="bi bi-exclamation-triangle fs-1 opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos com Chart.js -->
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="card border-0 shadow-sm h-100 chart-box">
+                        <div class="card-header bg-white border-0 pt-3">
+                            <h5 class="fw-bold text-secondary mb-0">
+                                <i class="bi bi-pie-chart me-2 text-success"></i>Certificação ISO 14000
+                            </h5>
+                            <small class="text-muted">Proporção de empresas certificadas em Goiás</small>
+                        </div>
+                        <div class="card-body d-flex align-items-center justify-content-center p-3" style="min-height: 280px;">
+                            <canvas id="chartIso"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="card border-0 shadow-sm h-100 chart-box">
+                        <div class="card-header bg-white border-0 pt-3">
+                            <h5 class="fw-bold text-secondary mb-0">
+                                <i class="bi bi-bar-chart-line me-2 text-primary"></i>Balanço Geral de Insumos e Resíduos
+                            </h5>
+                            <small class="text-muted">Consolidação de grandezas operacionais registradas</small>
+                        </div>
+                        <div class="card-body d-flex align-items-center justify-content-center p-3" style="min-height: 280px;">
+                            <canvas id="chartImpacto"></canvas>
                         </div>
                     </div>
                 </div>
@@ -71,78 +176,152 @@
 
         <!-- Section: Empresas -->
         <section id="empresas" class="content-section" style="display: none;">
-            <h2>Gestão de Empresas (Stakeholders)</h2>
-            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalEmpresa">Nova
-                Empresa</button>
+            <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom">
+                <div>
+                    <h2 class="fw-bold text-success mb-1">
+                        <i class="bi bi-building-check me-2"></i>Gestão de Organizações (Stakeholders)
+                    </h2>
+                    <p class="text-muted mb-0">Cadastro e consulta de indústrias, cooperativas e fornecedores em Goiás.</p>
+                </div>
+                <div class="d-flex gap-2 mt-2 mt-md-0">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="exportarEmpresasCSV()">
+                        <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar CSV
+                    </button>
+                    <button class="btn btn-success btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#modalEmpresa">
+                        <i class="bi bi-plus-circle me-1"></i> Nova Empresa
+                    </button>
+                </div>
+            </div>
 
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>CNPJ</th>
-                        <th>Cidade</th>
-                        <th>ISO 14000</th>
-                    </tr>
-                </thead>
-                <tbody id="tabela-empresas">
-                    <!-- Preenchido via JS -->
-                </tbody>
-            </table>
+            <!-- Barra de Filtros e Busca de Empresas -->
+            <div class="row g-2 mb-3 bg-light p-3 rounded-3 border">
+                <div class="col-md-7">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" id="filtroEmpresaTexto" class="form-control" placeholder="Buscar por Nome, CNPJ ou Cidade..." oninput="filtrarEmpresas()">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <select id="filtroEmpresaIso" class="form-select" onchange="filtrarEmpresas()">
+                        <option value="todos">Todos os status de certificação</option>
+                        <option value="sim">Apenas com certificação ISO 14000</option>
+                        <option value="nao">Apenas sem certificação</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2 text-muted small">
+                <span>Mostrando: <strong id="contador-empresas">0</strong> organização(ões)</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle border">
+                    <thead class="table-success">
+                        <tr>
+                            <th style="width: 80px;">ID</th>
+                            <th>Nome da Organização</th>
+                            <th>CNPJ</th>
+                            <th>Cidade / UF</th>
+                            <th style="width: 150px;">Certificação ISO</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-empresas">
+                        <!-- Preenchido via JS -->
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <!-- Section: Registros -->
         <section id="registros" class="content-section" style="display: none;">
-            <h2>Registros de Impacto e Recursos</h2>
-            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalRegistro">Novo
-                Registro</button>
+            <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom">
+                <div>
+                    <h2 class="fw-bold text-success mb-1">
+                        <i class="bi bi-clipboard2-pulse me-2"></i>Registros de Impacto e Recursos
+                    </h2>
+                    <p class="text-muted mb-0">Medições de consumo hídrico, elétrico, resíduos e ações de mitigação.</p>
+                </div>
+                <div class="d-flex gap-2 mt-2 mt-md-0">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="exportarRegistrosCSV()">
+                        <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar CSV
+                    </button>
+                    <button class="btn btn-success btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#modalRegistro">
+                        <i class="bi bi-plus-circle me-1"></i> Novo Registro
+                    </button>
+                </div>
+            </div>
 
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ID Empresa</th>
-                        <th>Data</th>
-                        <th>Água (L)</th>
-                        <th>Energia (kWh)</th>
-                        <th>Resíduos (kg)</th>
-                        <th>Perigosos (kg)</th>
-                    </tr>
-                </thead>
-                <tbody id="tabela-registros">
-                    <!-- Preenchido via JS -->
-                </tbody>
-            </table>
+            <!-- Barra de Filtros de Registros -->
+            <div class="row g-2 mb-3 bg-light p-3 rounded-3 border">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" id="filtroRegistroTexto" class="form-control" placeholder="Buscar por Ação de Mitigação..." oninput="filtrarRegistros()">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <select id="filtroRegistroEmpresa" class="form-select" onchange="filtrarRegistros()">
+                        <option value="todos">Filtrar por todas as empresas</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2 text-muted small">
+                <span>Mostrando: <strong id="contador-registros">0</strong> registro(s) de impacto</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle border">
+                    <thead class="table-success">
+                        <tr>
+                            <th style="width: 70px;">ID</th>
+                            <th>Empresa</th>
+                            <th>Data</th>
+                            <th>Água (L)</th>
+                            <th>Energia (kWh)</th>
+                            <th>Res. Sólidos (kg)</th>
+                            <th>Res. Perigosos (kg)</th>
+                            <th>Ações de Mitigação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-registros">
+                        <!-- Preenchido via JS -->
+                    </tbody>
+                </table>
+            </div>
         </section>
     </div>
 
     <!-- Modal Nova Empresa -->
     <div class="modal fade" id="modalEmpresa" tabindex="-1">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Cadastrar Empresa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-building me-2"></i>Cadastrar Empresa</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-4">
                     <form id="formEmpresa">
                         <div class="mb-3">
-                            <label class="form-label">Nome da Empresa</label>
-                            <input type="text" class="form-control" id="empNome" required>
+                            <label class="form-label fw-semibold">Razão Social / Nome</label>
+                            <input type="text" class="form-control" id="empNome" placeholder="Ex: Agroindústria Goiás S.A." required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">CNPJ</label>
-                            <input type="text" class="form-control" id="empCnpj" required>
+                            <label class="form-label fw-semibold">CNPJ</label>
+                            <input type="text" class="form-control" id="empCnpj" placeholder="00.000.000/0001-00" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Cidade (Goiás)</label>
-                            <input type="text" class="form-control" id="empCidade" required>
+                            <label class="form-label fw-semibold">Cidade em Goiás</label>
+                            <input type="text" class="form-control" id="empCidade" placeholder="Ex: Goiânia, Anápolis, Rio Verde" required>
                         </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="empIso">
-                            <label class="form-check-label">Certificada ISO 14000?</label>
+                        <div class="mb-3 form-check p-3 bg-light rounded border">
+                            <input type="checkbox" class="form-check-input ms-0 me-2" id="empIso">
+                            <label class="form-check-label fw-semibold" for="empIso">Possui Certificação NBR ISO 14000?</label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success px-4">Salvar Empresa</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -151,48 +330,48 @@
 
     <!-- Modal Novo Registro -->
     <div class="modal fade" id="modalRegistro" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Lançar Métrica Ambiental</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-clipboard2-check me-2"></i>Lançar Métrica Ambiental</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-4">
                     <form id="formRegistro">
                         <div class="mb-3">
-                            <label class="form-label">Selecione a Empresa</label>
+                            <label class="form-label fw-semibold">Organização Vinculada</label>
                             <select class="form-select" id="regEmpresaId" required>
                                 <!-- Preenchido via JS -->
                             </select>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label class="form-label">Água (L)</label>
-                                <input type="number" step="0.01" class="form-control" id="regAgua" required value="0">
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-droplet-half text-primary me-1"></i>Consumo de Água (Litros)</label>
+                                <input type="number" step="0.01" class="form-control" id="regAgua" required value="0" min="0">
                             </div>
-                            <div class="col">
-                                <label class="form-label">Energia (kWh)</label>
-                                <input type="number" step="0.01" class="form-control" id="regEnergia" required
-                                    value="0">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-lightning-charge text-warning me-1"></i>Energia Elétrica (kWh)</label>
+                                <input type="number" step="0.01" class="form-control" id="regEnergia" required value="0" min="0">
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label class="form-label">Resíduos Sólidos (kg)</label>
-                                <input type="number" step="0.01" class="form-control" id="regSolidos" required
-                                    value="0">
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-box-seam text-secondary me-1"></i>Resíduos Sólidos Comuns (kg)</label>
+                                <input type="number" step="0.01" class="form-control" id="regSolidos" required value="0" min="0">
                             </div>
-                            <div class="col">
-                                <label class="form-label">Res. Perigosos (kg)</label>
-                                <input type="number" step="0.01" class="form-control" id="regPerigosos" required
-                                    value="0">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="bi bi-exclamation-triangle text-danger me-1"></i>Resíduos Perigosos / Químicos (kg)</label>
+                                <input type="number" step="0.01" class="form-control" id="regPerigosos" required value="0" min="0">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Ações de Mitigação (ISO 14000)</label>
-                            <textarea class="form-control" id="regAcoes"></textarea>
+                            <label class="form-label fw-semibold">Ações de Mitigação e Melhoria Contínua (ISO 14000)</label>
+                            <textarea class="form-control" id="regAcoes" rows="3" placeholder="Descreva as medidas mitigadoras (ex: sistema de reuso de água, instalação de placas fotovoltaicas, destinação para reciclagem)..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-success">Registrar</button>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success px-4">Salvar Registro</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -201,6 +380,7 @@
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script da Aplicação -->
     <script src="app.js"></script>
 </body>
 

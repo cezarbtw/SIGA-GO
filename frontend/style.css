@@ -1,40 +1,113 @@
-/* Estilos Globais */
-body {
-    background-color: #f4f6f9;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: #333333;
+/* =====================================================
+   SIGA-GO - Estilos Visuais Modernos e Responsivos
+   Suporte a Tema Claro / Escuro (Bootstrap 5.3 data-bs-theme)
+   ===================================================== */
+
+:root {
+    --primary-green: #198754;
+    --primary-green-dark: #146c43;
+    --card-bg-light: #ffffff;
+    --body-bg-light: #f4f6f9;
 }
 
-/* Navbar */
+[data-bs-theme="light"] {
+    --card-bg: #ffffff;
+    --section-bg: #ffffff;
+    --border-color: #e9ecef;
+    --text-muted-custom: #6c757d;
+}
+
+[data-bs-theme="dark"] {
+    --card-bg: #212529;
+    --section-bg: #1e2227;
+    --border-color: #343a40;
+    --text-muted-custom: #adb5bd;
+}
+
+body {
+    background-color: var(--bs-body-bg, #f4f6f9);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Navbar Personalizada */
 .navbar {
-    background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
+    background: linear-gradient(135deg, #198754 0%, #115c38 100%) !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .navbar .nav-link {
     transition: all 0.2s ease-in-out;
     border-radius: 6px;
-    padding: 6px 12px;
+    padding: 6px 14px;
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .navbar .nav-link:hover,
 .navbar .nav-link.active {
     background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+}
+
+/* Indicador Pulsante de Status da API */
+.status-indicator {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-dot.online {
+    background-color: #20c997;
+    box-shadow: 0 0 8px #20c997;
+    animation: pulse-green 1.8s infinite;
+}
+
+.status-dot.offline {
+    background-color: #ff6b6b;
+    box-shadow: 0 0 6px #ff6b6b;
+}
+
+.status-dot.demo {
+    background-color: #ffc107;
+    box-shadow: 0 0 8px #ffc107;
+    animation: pulse-yellow 1.8s infinite;
+}
+
+@keyframes pulse-green {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(32, 201, 151, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(32, 201, 151, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(32, 201, 151, 0); }
+}
+
+@keyframes pulse-yellow {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(255, 193, 7, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
 }
 
 /* Seções de Conteúdo */
 .content-section {
-    background: #ffffff;
+    background: var(--section-bg);
     padding: 28px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     margin-bottom: 30px;
     animation: fadeIn 0.3s ease-in-out;
+    border: 1px solid var(--border-color);
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(8px);
     }
     to {
         opacity: 1;
@@ -44,34 +117,96 @@ body {
 
 /* Cards de Métricas do Dashboard */
 .metric-card {
-    border-radius: 10px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden;
+    position: relative;
 }
 
 .metric-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.metric-card .card-body {
+    position: relative;
+    z-index: 2;
 }
 
 /* Caixas de Gráficos */
 .chart-box {
-    border-radius: 10px;
-    background-color: #ffffff;
-    border: 1px solid #e9ecef !important;
+    border-radius: 12px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color) !important;
+    transition: transform 0.2s ease;
+}
+
+.chart-box:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08) !important;
 }
 
 .chart-box canvas {
-    max-height: 260px;
+    max-height: 270px;
     width: 100% !important;
 }
 
-/* Tabelas e Modais */
-.table thead th {
-    font-size: 0.88rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+/* Barra de Filtros e Busca */
+.filter-bar {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
 }
 
-.badge {
-    font-weight: 600;
+/* Tabelas */
+.table thead th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+/* Badges de Risco Ambiental */
+.badge-risco-alto {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.badge-risco-medio {
+    background-color: #fd7e14;
+    color: #ffffff;
+}
+
+.badge-risco-baixo {
+    background-color: #198754;
+    color: #ffffff;
+}
+
+/* Banner de Demonstração */
+.demo-banner {
+    background: linear-gradient(90deg, #fff3cd 0%, #ffeeba 100%);
+    border-left: 4px solid #ffc107;
+    color: #856404;
+    border-radius: 8px;
+    padding: 12px 18px;
+    display: none;
+}
+
+[data-bs-theme="dark"] .demo-banner {
+    background: #332701;
+    color: #ffe082;
+    border-left-color: #ffc107;
+}
+
+/* Botão de Troca de Tema */
+.btn-theme {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }

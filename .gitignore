@@ -1,0 +1,23 @@
+# Ambientes Virtuais Python
+venv/
+backend/venv/
+.venv/
+env/
+
+# Byte-compiled / cache Python
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+
+# Banco de dados SQLite local
+backend/sigago.db
+*.db
+*.sqlite3
+
+# Arquivos temporários do Microsoft Office / Word
+~$*.docx
+
+# Arquivos de IDEs
+.vscode/
+.idea/

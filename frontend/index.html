@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGA-GO | Gestão Ambiental</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="#">SIGA-GO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showSection('dashboard')">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('empresas')">Empresas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('registros')">Registros de Impacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Alertas -->
+        <div id="alert-container"></div>
+
+        <!-- Section: Dashboard -->
+        <section id="dashboard" class="content-section">
+            <h2>Dashboard ISO 14000</h2>
+            <p>Resumo de conformidade ambiental das organizações do estado de Goiás.</p>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-header">Empresas Cadastradas</div>
+                        <div class="card-body">
+                            <h5 class="card-title" id="dash-empresas">0</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-header">Registros Ambientais</div>
+                        <div class="card-body">
+                            <h5 class="card-title" id="dash-registros">0</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-info mb-3">
+                        <div class="card-header">Conformidade ISO 14000</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ativo</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Empresas -->
+        <section id="empresas" class="content-section" style="display: none;">
+            <h2>Gestão de Empresas (Stakeholders)</h2>
+            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalEmpresa">Nova
+                Empresa</button>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CNPJ</th>
+                        <th>Cidade</th>
+                        <th>ISO 14000</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-empresas">
+                    <!-- Preenchido via JS -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section: Registros -->
+        <section id="registros" class="content-section" style="display: none;">
+            <h2>Registros de Impacto e Recursos</h2>
+            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalRegistro">Novo
+                Registro</button>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID Empresa</th>
+                        <th>Data</th>
+                        <th>Água (L)</th>
+                        <th>Energia (kWh)</th>
+                        <th>Resíduos (kg)</th>
+                        <th>Perigosos (kg)</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-registros">
+                    <!-- Preenchido via JS -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <!-- Modal Nova Empresa -->
+    <div class="modal fade" id="modalEmpresa" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cadastrar Empresa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEmpresa">
+                        <div class="mb-3">
+                            <label class="form-label">Nome da Empresa</label>
+                            <input type="text" class="form-control" id="empNome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">CNPJ</label>
+                            <input type="text" class="form-control" id="empCnpj" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cidade (Goiás)</label>
+                            <input type="text" class="form-control" id="empCidade" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="empIso">
+                            <label class="form-check-label">Certificada ISO 14000?</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Novo Registro -->
+    <div class="modal fade" id="modalRegistro" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Lançar Métrica Ambiental</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formRegistro">
+                        <div class="mb-3">
+                            <label class="form-label">Selecione a Empresa</label>
+                            <select class="form-select" id="regEmpresaId" required>
+                                <!-- Preenchido via JS -->
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Água (L)</label>
+                                <input type="number" step="0.01" class="form-control" id="regAgua" required value="0">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Energia (kWh)</label>
+                                <input type="number" step="0.01" class="form-control" id="regEnergia" required
+                                    value="0">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Resíduos Sólidos (kg)</label>
+                                <input type="number" step="0.01" class="form-control" id="regSolidos" required
+                                    value="0">
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Res. Perigosos (kg)</label>
+                                <input type="number" step="0.01" class="form-control" id="regPerigosos" required
+                                    value="0">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ações de Mitigação (ISO 14000)</label>
+                            <textarea class="form-control" id="regAcoes"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,58 +1,245 @@
 /* =====================================================
-   SIGA-GO - Estilos Visuais Modernos e Responsivos
+   SIGA-GO - Layout com Sidebar Retrátil (Estilo TCM-GO)
    Suporte a Tema Claro / Escuro (Bootstrap 5.3 data-bs-theme)
    ===================================================== */
 
 :root {
     --primary-green: #198754;
-    --primary-green-dark: #146c43;
-    --card-bg-light: #ffffff;
-    --body-bg-light: #f4f6f9;
+    --primary-green-dark: #12633e;
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 72px;
+    --sidebar-bg: #141c2b;
+    --sidebar-border: rgba(255, 255, 255, 0.08);
 }
 
 [data-bs-theme="light"] {
     --card-bg: #ffffff;
     --section-bg: #ffffff;
     --border-color: #e9ecef;
-    --text-muted-custom: #6c757d;
+    --body-bg: #f4f6f9;
 }
 
 [data-bs-theme="dark"] {
-    --card-bg: #212529;
-    --section-bg: #1e2227;
-    --border-color: #343a40;
-    --text-muted-custom: #adb5bd;
+    --card-bg: #1e2227;
+    --section-bg: #1a1e23;
+    --border-color: #2e343b;
+    --body-bg: #121418;
 }
 
 body {
-    background-color: var(--bs-body-bg, #f4f6f9);
+    background-color: var(--body-bg, #f4f6f9);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    color: var(--bs-body-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
-/* Navbar Personalizada */
-.navbar {
-    background: linear-gradient(135deg, #198754 0%, #115c38 100%) !important;
+/* =====================================================
+   SIDEBAR LATERAL (FIXA À ESQUERDA)
+   ===================================================== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    background-color: var(--sidebar-bg);
+    color: #ffffff;
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+    user-select: none;
+}
+
+/* Topo da Sidebar */
+.sidebar-header {
+    height: 60px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--sidebar-border);
+    overflow: hidden;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.sidebar-brand .brand-text {
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s ease;
+}
+
+/* Menu de Navegação */
+.sidebar-menu {
+    flex-grow: 1;
+    padding: 16px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar-heading {
+    padding: 10px 18px 6px 18px;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: #64748b;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.sidebar-link {
+    color: #cbd5e1;
+    padding: 12px 18px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    margin: 3px 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.sidebar-link i {
+    font-size: 1.25rem;
+    min-width: 28px;
+    text-align: center;
+    color: #94a3b8;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+}
+
+.sidebar-link:hover i {
+    color: #20c997;
+    transform: scale(1.1);
+}
+
+.sidebar-link.active {
+    background: linear-gradient(135deg, #198754 0%, #157347 100%);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.35);
+}
+
+.sidebar-link.active i {
+    color: #ffffff;
+}
+
+/* Base da Sidebar com Botão Circular Retrátil */
+.sidebar-footer {
+    padding: 14px 18px;
+    border-top: 1px solid var(--sidebar-border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.sidebar-toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #242f44;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+.sidebar-toggle-btn:hover {
+    background-color: #198754;
+    border-color: #198754;
+    transform: scale(1.1);
+}
+
+.sidebar-toggle-btn i {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+/* =====================================================
+   SIDEBAR RECOLHIDA (MODO COMPACTO - ÍCONES APENAS)
+   ===================================================== */
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.collapsed .brand-text,
+.sidebar.collapsed .nav-text,
+.sidebar.collapsed .sidebar-heading {
+    display: none !important;
+}
+
+.sidebar.collapsed .sidebar-header {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar.collapsed .sidebar-link {
+    justify-content: center;
+    padding: 12px 0;
+    margin: 4px 8px;
+}
+
+.sidebar.collapsed .sidebar-link i {
+    margin: 0 !important;
+    min-width: unset;
+}
+
+.sidebar.collapsed .sidebar-footer {
+    justify-content: center;
+    padding: 14px 0;
+}
+
+.sidebar.collapsed #sidebar-toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* =====================================================
+   ÁREA PRINCIPAL DE CONTEÚDO (MAIN WRAPPER)
+   ===================================================== */
+.main-wrapper {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-wrapper.expanded {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+/* Barra Superior (Topbar) */
+.topbar {
+    background: linear-gradient(135deg, #198754 0%, #115c38 100%);
+    color: #ffffff;
+    min-height: 60px;
+    z-index: 1030;
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-}
-
-.navbar .nav-link {
-    transition: all 0.2s ease-in-out;
-    border-radius: 6px;
-    padding: 6px 14px;
-    color: rgba(255, 255, 255, 0.9) !important;
-}
-
-.navbar .nav-link:hover,
-.navbar .nav-link.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #ffffff !important;
 }
 
 /* Indicador Pulsante de Status da API */
 .status-indicator {
-    font-size: 0.8rem;
-    padding: 4px 10px;
+    font-size: 0.82rem;
+    padding: 4px 12px;
     border-radius: 20px;
     font-weight: 500;
 }
@@ -96,10 +283,10 @@ body {
 /* Seções de Conteúdo */
 .content-section {
     background: var(--section-bg);
-    padding: 28px;
-    border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    margin-bottom: 30px;
+    padding: 26px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
     animation: fadeIn 0.3s ease-in-out;
     border: 1px solid var(--border-color);
 }
@@ -120,7 +307,6 @@ body {
     border-radius: 12px;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     overflow: hidden;
-    position: relative;
 }
 
 .metric-card:hover {
@@ -128,21 +314,11 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
-.metric-card .card-body {
-    position: relative;
-    z-index: 2;
-}
-
 /* Caixas de Gráficos */
 .chart-box {
     border-radius: 12px;
     background-color: var(--card-bg);
     border: 1px solid var(--border-color) !important;
-    transition: transform 0.2s ease;
-}
-
-.chart-box:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08) !important;
 }
 
 .chart-box canvas {
@@ -155,17 +331,6 @@ body {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 10px;
-}
-
-/* Tabelas */
-.table thead th {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-}
-
-.table tbody tr {
-    transition: background-color 0.15s ease;
 }
 
 /* Badges de Risco Ambiental */
@@ -202,11 +367,36 @@ body {
 
 /* Botão de Troca de Tema */
 .btn-theme {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
+}
+
+/* =====================================================
+   RESPONSIVIDADE (MOBILE / DISPOSITIVOS PEQUENOS)
+   ===================================================== */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-width) !important;
+    }
+
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .main-wrapper,
+    .main-wrapper.expanded {
+        margin-left: 0 !important;
+    }
+
+    .sidebar.collapsed .brand-text,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .sidebar-heading {
+        display: block !important;
+    }
 }

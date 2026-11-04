@@ -44,14 +44,66 @@ function toggleTheme() {
 }
 
 // ========================
+// CONTROLE DA SIDEBAR RETRÁTIL (ESTILO TCM-GO)
+// ========================
+function initSidebar() {
+    const isCollapsed = localStorage.getItem('siga_sidebar_collapsed') === 'true';
+    if (isCollapsed) {
+        setSidebarCollapsed(true);
+    }
+}
+
+function setSidebarCollapsed(collapsed) {
+    const sidebar = document.getElementById('sidebar');
+    const mainWrapper = document.getElementById('main-wrapper');
+    const toggleIcon = document.getElementById('sidebar-toggle-icon');
+
+    if (collapsed) {
+        sidebar?.classList.add('collapsed');
+        mainWrapper?.classList.add('expanded');
+        if (toggleIcon) toggleIcon.className = 'bi bi-chevron-right';
+        localStorage.setItem('siga_sidebar_collapsed', 'true');
+    } else {
+        sidebar?.classList.remove('collapsed');
+        mainWrapper?.classList.remove('expanded');
+        if (toggleIcon) toggleIcon.className = 'bi bi-chevron-left';
+        localStorage.setItem('siga_sidebar_collapsed', 'false');
+    }
+
+    // Redimensiona os gráficos do Chart.js suavemente
+    setTimeout(() => {
+        if (chartIsoInstance) chartIsoInstance.resize();
+        if (chartImpactoInstance) chartImpactoInstance.resize();
+        if (chartEmpresasInstance) chartEmpresasInstance.resize();
+    }, 310);
+}
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const isCurrentlyCollapsed = sidebar?.classList.contains('collapsed');
+    setSidebarCollapsed(!isCurrentlyCollapsed);
+}
+
+function toggleSidebarMobile() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar?.classList.toggle('mobile-open');
+}
+
+// ========================
 // NAVEGAÇÃO SPA ENTRE SEÇÕES
 // ========================
 function showSection(sectionId) {
     document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
 
-    document.querySelectorAll('.navbar-nav .nav-link').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.sidebar-link').forEach(btn => btn.classList.remove('active'));
     const navBtn = document.getElementById(`nav-${sectionId}`);
     if (navBtn) navBtn.classList.add('active');
+
+    // Em telas pequenas (mobile), fecha a sidebar ao selecionar um item
+    const sidebar = document.getElementById('sidebar');
+    if (window.innerWidth <= 768 && sidebar) {
+        sidebar.classList.remove('mobile-open');
+    }
 
     const targetSection = document.getElementById(sectionId);
     if (targetSection) targetSection.style.display = 'block';
@@ -811,6 +863,7 @@ function exportarRegistrosCSV() {
 // ========================
 window.onload = async () => {
     initTheme();
+    initSidebar();
     await checkApiHealth();
     await loadEmpresas();
     await loadRegistros();

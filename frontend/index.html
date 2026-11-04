@@ -16,354 +16,368 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm sticky-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#" onclick="showSection('dashboard')">
-                <i class="bi bi-shield-check fs-4 text-warning"></i> SIGA-GO
+    <!-- =====================================================
+         SIDEBAR LATERAL RETRÁTIL (ESTILO TCM-GO)
+         ===================================================== -->
+    <aside id="sidebar" class="sidebar">
+        <!-- Topo da Sidebar: Identidade e Logo -->
+        <div class="sidebar-header">
+            <a class="sidebar-brand text-decoration-none" href="#" onclick="showSection('dashboard')" title="SIGA-GO">
+                <i class="bi bi-shield-check fs-3 text-warning"></i>
+                <span class="brand-text fw-bold text-white">SIGA-GO</span>
             </a>
+        </div>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+        <!-- Menu de Navegação Vertical -->
+        <div class="sidebar-menu">
+            <div class="sidebar-heading text-uppercase">Gestão Ambiental</div>
+            <ul class="nav flex-column gap-1">
+                <li class="nav-item">
+                    <button class="sidebar-link active w-100 text-start border-0 bg-transparent" id="nav-dashboard" onclick="showSection('dashboard')" title="Dashboard de Indicadores">
+                        <i class="bi bi-speedometer2 me-3"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="sidebar-link w-100 text-start border-0 bg-transparent" id="nav-empresas" onclick="showSection('empresas')" title="Organizações Monitoradas">
+                        <i class="bi bi-building me-3"></i>
+                        <span class="nav-text">Empresas</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="sidebar-link w-100 text-start border-0 bg-transparent" id="nav-registros" onclick="showSection('registros')" title="Registros de Impacto e Recursos">
+                        <i class="bi bi-clipboard2-data me-3"></i>
+                        <span class="nav-text">Registros de Impacto</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Rodapé da Sidebar: Botão Circular de Recolhimento/Expansão -->
+        <div class="sidebar-footer">
+            <button class="sidebar-toggle-btn shadow-sm" id="sidebar-toggle" onclick="toggleSidebar()" title="Recolher / Expandir Menu">
+                <i class="bi bi-chevron-left" id="sidebar-toggle-icon"></i>
             </button>
+        </div>
+    </aside>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto gap-1">
-                    <li class="nav-item">
-                        <button class="nav-link btn btn-link text-decoration-none active fw-semibold" id="nav-dashboard"
-                            onclick="showSection('dashboard')">
-                            <i class="bi bi-speedometer2 me-1"></i> Dashboard
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link btn btn-link text-decoration-none fw-semibold" id="nav-empresas"
-                            onclick="showSection('empresas')">
-                            <i class="bi bi-building me-1"></i> Empresas
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link btn btn-link text-decoration-none fw-semibold" id="nav-registros"
-                            onclick="showSection('registros')">
-                            <i class="bi bi-clipboard2-data me-1"></i> Registros de Impacto
-                        </button>
-                    </li>
-                </ul>
-
-                <!-- Ferramentas da Direita: Status da API, Botão Demo e Dark Mode -->
-                <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
-                    <!-- Status da API / Conexão Web Service -->
-                    <span id="api-status-badge"
-                        class="status-indicator bg-black bg-opacity-25 text-white d-flex align-items-center gap-2"
-                        title="Status de comunicação com o Web Service FastAPI">
-                        <span class="status-dot offline" id="status-dot"></span>
-                        <span id="status-text" class="small">Verificando...</span>
-                    </span>
-
-                    <!-- Botão de Simulação / Dados Demo -->
-                    <button id="btn-toggle-demo"
-                        class="btn btn-warning btn-sm fw-semibold text-dark d-flex align-items-center gap-1 shadow-sm"
-                        onclick="toggleDemoMode()"
-                        title="Carrega dados simulados de Goiás para testes quando o servidor local não puder ser executado">
-                        <i class="bi bi-lightning-charge-fill"></i>
-                        <span id="demo-btn-text">Dados Demo</span>
-                    </button>
-
-                    <!-- Alternador de Tema Escuro / Claro -->
-                    <button class="btn btn-outline-light btn-theme shadow-sm" id="theme-toggle" onclick="toggleTheme()"
-                        title="Alternar entre Tema Claro e Escuro">
-                        <i class="bi bi-moon-stars-fill" id="theme-icon"></i>
-                    </button>
+    <!-- =====================================================
+         ÁREA PRINCIPAL DE CONTEÚDO (MAIN WRAPPER)
+         ===================================================== -->
+    <div id="main-wrapper" class="main-wrapper">
+        <!-- Barra Superior (Topbar) -->
+        <header class="topbar sticky-top shadow-sm d-flex align-items-center justify-content-between px-3 px-md-4 py-2">
+            <div class="d-flex align-items-center gap-3">
+                <!-- Botão Menu Mobile -->
+                <button class="btn btn-outline-light btn-sm d-md-none" onclick="toggleSidebarMobile()" title="Abrir Menu">
+                    <i class="bi bi-list fs-5"></i>
+                </button>
+                <div class="d-none d-sm-flex align-items-center gap-2 text-white">
+                    <i class="bi bi-geo-alt-fill text-warning"></i>
+                    <span class="fw-semibold">Estado de Goiás</span>
+                    <span class="opacity-75 d-none d-lg-inline">| Monitoramento ISO 14000</span>
                 </div>
             </div>
-        </div>
-    </nav>
 
-    <!-- Main Container -->
-    <div class="container my-4">
-        <!-- Banner Informativo do Modo Demonstração -->
-        <div id="demo-banner"
-            class="demo-banner mb-3 shadow-sm d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <!-- Controles da Direita -->
             <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-info-circle-fill fs-5"></i>
-                <div>
-                    <strong>Modo Simulação Ativo:</strong> Exibindo dados de exemplo de indústrias e cooperativas em
-                    Goiás. Ideal para apresentações e testes sem o servidor FastAPI local.
-                </div>
+                <!-- Status da API -->
+                <span id="api-status-badge" class="status-indicator bg-black bg-opacity-25 text-white d-flex align-items-center gap-2" title="Status de comunicação com os Web Services FastAPI">
+                    <span class="status-dot offline" id="status-dot"></span>
+                    <span id="status-text" class="small">Verificando...</span>
+                </span>
+
+                <!-- Botão de Simulação / Dados Demo -->
+                <button id="btn-toggle-demo" class="btn btn-warning btn-sm fw-semibold text-dark d-flex align-items-center gap-1 shadow-sm" onclick="toggleDemoMode()" title="Carrega dados simulados de Goiás para testes">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span id="demo-btn-text" class="d-none d-md-inline">Dados Demo</span>
+                </button>
+
+                <!-- Alternador de Tema Escuro / Claro -->
+                <button class="btn btn-outline-light btn-theme shadow-sm" id="theme-toggle" onclick="toggleTheme()" title="Alternar Modo Escuro / Claro">
+                    <i class="bi bi-moon-stars-fill" id="theme-icon"></i>
+                </button>
             </div>
-            <button class="btn btn-outline-dark btn-sm fw-semibold" onclick="toggleDemoMode()">
-                <i class="bi bi-arrow-repeat me-1"></i> Conectar à API Real
-            </button>
-        </div>
+        </header>
 
-        <!-- Alertas Dinâmicos -->
-        <div id="alert-container"></div>
-
-        <!-- Section: Dashboard -->
-        <section id="dashboard" class="content-section">
-            <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom">
-                <div>
-                    <h2 class="fw-bold text-success mb-1">
-                        <i class="bi bi-graph-up-arrow me-2"></i>Dashboard de Gestão Ambiental (ISO 14000)
-                    </h2>
-                    <p class="text-muted mb-0">Monitoramento analítico de insumos, resíduos e sustentabilidade no estado
-                        de Goiás.</p>
+        <!-- Conteúdo Interno da Aplicação -->
+        <main class="container-fluid p-3 p-md-4">
+            <!-- Banner Informativo do Modo Demonstração -->
+            <div id="demo-banner" class="demo-banner mb-3 shadow-sm d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-info-circle-fill fs-5"></i>
+                    <div>
+                        <strong>Modo Simulação Ativo:</strong> Exibindo dados de exemplo de indústrias e cooperativas em Goiás. Ideal para apresentações e testes sem o servidor FastAPI local.
+                    </div>
                 </div>
-                <div class="d-flex gap-2 mt-2 mt-md-0">
-                    <button class="btn btn-outline-success btn-sm" onclick="loadDashboard()">
-                        <i class="bi bi-arrow-clockwise me-1"></i> Sincronizar
-                    </button>
-                </div>
+                <button class="btn btn-outline-dark btn-sm fw-semibold" onclick="toggleDemoMode()">
+                    <i class="bi bi-arrow-repeat me-1"></i> Conectar à API Real
+                </button>
             </div>
 
-            <!-- Cards de Métricas Principais -->
-            <div class="row g-3 mb-4">
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card metric-card border-0 shadow-sm text-white bg-primary h-100">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="text-uppercase small fw-bold opacity-75">Empresas Monitoradas</span>
-                                <h3 class="display-6 fw-bold mb-0 mt-1" id="dash-empresas">0</h3>
+            <!-- Alertas Dinâmicos -->
+            <div id="alert-container"></div>
+
+            <!-- Section: Dashboard -->
+            <section id="dashboard" class="content-section">
+                <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom">
+                    <div>
+                        <h2 class="fw-bold text-success mb-1">
+                            <i class="bi bi-graph-up-arrow me-2"></i>Dashboard de Gestão Ambiental (ISO 14000)
+                        </h2>
+                        <p class="text-muted mb-0">Monitoramento analítico de insumos, resíduos e sustentabilidade no estado de Goiás.</p>
+                    </div>
+                    <div class="d-flex gap-2 mt-2 mt-md-0">
+                        <button class="btn btn-outline-success btn-sm" onclick="loadDashboard()">
+                            <i class="bi bi-arrow-clockwise me-1"></i> Sincronizar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cards de Métricas Principais -->
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="card metric-card border-0 shadow-sm text-white bg-primary h-100">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-uppercase small fw-bold opacity-75">Empresas Monitoradas</span>
+                                    <h3 class="display-6 fw-bold mb-0 mt-1" id="dash-empresas">0</h3>
+                                </div>
+                                <i class="bi bi-building fs-1 opacity-50"></i>
                             </div>
-                            <i class="bi bi-building fs-1 opacity-50"></i>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card metric-card border-0 shadow-sm text-white bg-success h-100">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="text-uppercase small fw-bold opacity-75">Registros Ambientais</span>
-                                <h3 class="display-6 fw-bold mb-0 mt-1" id="dash-registros">0</h3>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="card metric-card border-0 shadow-sm text-white bg-success h-100">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-uppercase small fw-bold opacity-75">Registros Ambientais</span>
+                                    <h3 class="display-6 fw-bold mb-0 mt-1" id="dash-registros">0</h3>
+                                </div>
+                                <i class="bi bi-journal-check fs-1 opacity-50"></i>
                             </div>
-                            <i class="bi bi-journal-check fs-1 opacity-50"></i>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card metric-card border-0 shadow-sm text-white bg-info h-100">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="text-uppercase small fw-bold opacity-75">Índice ISO 14000</span>
-                                <h3 class="display-6 fw-bold mb-0 mt-1" id="dash-taxa-iso">0%</h3>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="card metric-card border-0 shadow-sm text-white bg-info h-100">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-uppercase small fw-bold opacity-75">Índice ISO 14000</span>
+                                    <h3 class="display-6 fw-bold mb-0 mt-1" id="dash-taxa-iso">0%</h3>
+                                </div>
+                                <i class="bi bi-patch-check fs-1 opacity-50"></i>
                             </div>
-                            <i class="bi bi-patch-check fs-1 opacity-50"></i>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card metric-card border-0 shadow-sm text-white bg-secondary h-100">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="text-uppercase small fw-bold opacity-75">Água Monitorada</span>
-                                <h4 class="fw-bold mb-0 mt-1"><span id="dash-agua">0</span> L</h4>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="card metric-card border-0 shadow-sm text-white bg-secondary h-100">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-uppercase small fw-bold opacity-75">Água Monitorada</span>
+                                    <h4 class="fw-bold mb-0 mt-1"><span id="dash-agua">0</span> L</h4>
+                                </div>
+                                <i class="bi bi-droplet-half fs-1 opacity-50"></i>
                             </div>
-                            <i class="bi bi-droplet-half fs-1 opacity-50"></i>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card metric-card border-0 shadow-sm text-dark bg-warning h-100">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="text-uppercase small fw-bold opacity-75">Energia Monitorada</span>
-                                <h4 class="fw-bold mb-0 mt-1"><span id="dash-energia">0</span> kWh</h4>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="card metric-card border-0 shadow-sm text-dark bg-warning h-100">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-uppercase small fw-bold opacity-75">Energia Monitorada</span>
+                                    <h4 class="fw-bold mb-0 mt-1"><span id="dash-energia">0</span> kWh</h4>
+                                </div>
+                                <i class="bi bi-lightning-charge fs-1 opacity-50"></i>
                             </div>
-                            <i class="bi bi-lightning-charge fs-1 opacity-50"></i>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card metric-card border-0 shadow-sm text-white bg-danger h-100">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="text-uppercase small fw-bold opacity-75">Resíduos Perigosos</span>
-                                <h4 class="fw-bold mb-0 mt-1"><span id="dash-perigosos">0</span> kg</h4>
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="card metric-card border-0 shadow-sm text-white bg-danger h-100">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-uppercase small fw-bold opacity-75">Resíduos Perigosos</span>
+                                    <h4 class="fw-bold mb-0 mt-1"><span id="dash-perigosos">0</span> kg</h4>
+                                </div>
+                                <i class="bi bi-exclamation-triangle fs-1 opacity-50"></i>
                             </div>
-                            <i class="bi bi-exclamation-triangle fs-1 opacity-50"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Gráficos com Chart.js -->
-            <div class="row g-4 mb-4">
-                <div class="col-lg-5">
-                    <div class="card border-0 shadow-sm h-100 chart-box">
-                        <div class="card-header bg-transparent border-0 pt-3">
-                            <h5 class="fw-bold text-body-secondary mb-0">
-                                <i class="bi bi-pie-chart me-2 text-success"></i>Certificação ISO 14000
-                            </h5>
-                            <small class="text-muted">Proporção de conformidade normativa no estado</small>
-                        </div>
-                        <div class="card-body d-flex align-items-center justify-content-center p-3"
-                            style="min-height: 270px;">
-                            <canvas id="chartIso"></canvas>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-7">
-                    <div class="card border-0 shadow-sm h-100 chart-box">
-                        <div class="card-header bg-transparent border-0 pt-3">
-                            <h5 class="fw-bold text-body-secondary mb-0">
-                                <i class="bi bi-bar-chart-line me-2 text-primary"></i>Balanço Geral de Insumos e
-                                Resíduos
-                            </h5>
-                            <small class="text-muted">Consolidação de grandezas operacionais registradas</small>
+                <!-- Gráficos com Chart.js -->
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-5">
+                        <div class="card border-0 shadow-sm h-100 chart-box">
+                            <div class="card-header bg-transparent border-0 pt-3">
+                                <h5 class="fw-bold text-body-secondary mb-0">
+                                    <i class="bi bi-pie-chart me-2 text-success"></i>Certificação ISO 14000
+                                </h5>
+                                <small class="text-muted">Proporção de conformidade normativa no estado</small>
+                            </div>
+                            <div class="card-body d-flex align-items-center justify-content-center p-3" style="min-height: 270px;">
+                                <canvas id="chartIso"></canvas>
+                            </div>
                         </div>
-                        <div class="card-body d-flex align-items-center justify-content-center p-3"
-                            style="min-height: 270px;">
-                            <canvas id="chartImpacto"></canvas>
+                    </div>
+
+                    <div class="col-lg-7">
+                        <div class="card border-0 shadow-sm h-100 chart-box">
+                            <div class="card-header bg-transparent border-0 pt-3">
+                                <h5 class="fw-bold text-body-secondary mb-0">
+                                    <i class="bi bi-bar-chart-line me-2 text-primary"></i>Balanço Geral de Insumos e Resíduos
+                                </h5>
+                                <small class="text-muted">Consolidação de grandezas operacionais registradas</small>
+                            </div>
+                            <div class="card-body d-flex align-items-center justify-content-center p-3" style="min-height: 270px;">
+                                <canvas id="chartImpacto"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 3º Gráfico: Consumo por Organização -->
-            <div class="card border-0 shadow-sm chart-box">
-                <div class="card-header bg-transparent border-0 pt-3">
-                    <h5 class="fw-bold text-body-secondary mb-0">
-                        <i class="bi bi-reception-4 me-2 text-info"></i>Consumo Relativo por Organização (Água x
-                        Energia)
-                    </h5>
-                    <small class="text-muted">Comparativo do impacto ambiental acumulado por entidade</small>
-                </div>
-                <div class="card-body p-3" style="min-height: 260px;">
-                    <canvas id="chartEmpresas"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section: Empresas -->
-        <section id="empresas" class="content-section" style="display: none;">
-            <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom">
-                <div>
-                    <h2 class="fw-bold text-success mb-1">
-                        <i class="bi bi-building-check me-2"></i>Gestão de Organizações (Stakeholders)
-                    </h2>
-                    <p class="text-muted mb-0">Cadastro e consulta de indústrias, cooperativas e fornecedores em Goiás.
-                    </p>
-                </div>
-                <div class="d-flex gap-2 mt-2 mt-md-0">
-                    <button class="btn btn-outline-secondary btn-sm" onclick="exportarEmpresasCSV()">
-                        <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar CSV
-                    </button>
-                    <button class="btn btn-success btn-sm shadow-sm" data-bs-toggle="modal"
-                        data-bs-target="#modalEmpresa">
-                        <i class="bi bi-plus-circle me-1"></i> Nova Empresa
-                    </button>
-                </div>
-            </div>
-
-            <!-- Barra de Filtros e Busca de Empresas -->
-            <div class="row g-2 mb-3 p-3 filter-bar">
-                <div class="col-md-7">
-                    <div class="input-group">
-                        <span class="input-group-text bg-transparent"><i class="bi bi-search text-muted"></i></span>
-                        <input type="text" id="filtroEmpresaTexto" class="form-control"
-                            placeholder="Buscar por Nome, CNPJ ou Cidade..." oninput="filtrarEmpresas()">
+                <!-- 3º Gráfico: Consumo por Organização -->
+                <div class="card border-0 shadow-sm chart-box">
+                    <div class="card-header bg-transparent border-0 pt-3">
+                        <h5 class="fw-bold text-body-secondary mb-0">
+                            <i class="bi bi-reception-4 me-2 text-info"></i>Consumo Relativo por Organização (Água x Energia)
+                        </h5>
+                        <small class="text-muted">Comparativo do impacto ambiental acumulado por entidade</small>
+                    </div>
+                    <div class="card-body p-3" style="min-height: 260px;">
+                        <canvas id="chartEmpresas"></canvas>
                     </div>
                 </div>
-                <div class="col-md-5">
-                    <select id="filtroEmpresaIso" class="form-select" onchange="filtrarEmpresas()">
-                        <option value="todos">Todos os status de certificação</option>
-                        <option value="sim">Apenas com certificação ISO 14000</option>
-                        <option value="nao">Apenas sem certificação</option>
-                    </select>
-                </div>
-            </div>
+            </section>
 
-            <div class="d-flex justify-content-between align-items-center mb-2 text-muted small">
-                <span>Mostrando: <strong id="contador-empresas">0</strong> organização(ões)</span>
-            </div>
-
-            <div class="table-responsive">
-                <table class="table table-hover align-middle border">
-                    <thead class="table-success">
-                        <tr>
-                            <th style="width: 80px;">ID</th>
-                            <th>Nome da Organização</th>
-                            <th>CNPJ</th>
-                            <th>Cidade / UF</th>
-                            <th style="width: 150px;">Certificação ISO</th>
-                            <th style="width: 90px;" class="text-center">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabela-empresas">
-                        <!-- Preenchido via JS -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Section: Registros -->
-        <section id="registros" class="content-section" style="display: none;">
-            <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom">
-                <div>
-                    <h2 class="fw-bold text-success mb-1">
-                        <i class="bi bi-clipboard2-pulse me-2"></i>Registros de Impacto e Recursos
-                    </h2>
-                    <p class="text-muted mb-0">Medições de consumo hídrico, elétrico, resíduos e ações de mitigação.</p>
-                </div>
-                <div class="d-flex gap-2 mt-2 mt-md-0">
-                    <button class="btn btn-outline-secondary btn-sm" onclick="exportarRegistrosCSV()">
-                        <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar CSV
-                    </button>
-                    <button class="btn btn-success btn-sm shadow-sm" data-bs-toggle="modal"
-                        data-bs-target="#modalRegistro">
-                        <i class="bi bi-plus-circle me-1"></i> Novo Registro
-                    </button>
-                </div>
-            </div>
-
-            <!-- Barra de Filtros de Registros -->
-            <div class="row g-2 mb-3 p-3 filter-bar">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-text bg-transparent"><i class="bi bi-search text-muted"></i></span>
-                        <input type="text" id="filtroRegistroTexto" class="form-control"
-                            placeholder="Buscar por Ação de Mitigação..." oninput="filtrarRegistros()">
+            <!-- Section: Empresas -->
+            <section id="empresas" class="content-section" style="display: none;">
+                <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom">
+                    <div>
+                        <h2 class="fw-bold text-success mb-1">
+                            <i class="bi bi-building-check me-2"></i>Gestão de Organizações (Stakeholders)
+                        </h2>
+                        <p class="text-muted mb-0">Cadastro e consulta de indústrias, cooperativas e fornecedores em Goiás.</p>
+                    </div>
+                    <div class="d-flex gap-2 mt-2 mt-md-0">
+                        <button class="btn btn-outline-secondary btn-sm" onclick="exportarEmpresasCSV()">
+                            <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar CSV
+                        </button>
+                        <button class="btn btn-success btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#modalEmpresa">
+                            <i class="bi bi-plus-circle me-1"></i> Nova Empresa
+                        </button>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <select id="filtroRegistroEmpresa" class="form-select" onchange="filtrarRegistros()">
-                        <option value="todos">Filtrar por todas as empresas</option>
-                    </select>
+
+                <!-- Barra de Filtros e Busca de Empresas -->
+                <div class="row g-2 mb-3 p-3 filter-bar">
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <span class="input-group-text bg-transparent"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" id="filtroEmpresaTexto" class="form-control" placeholder="Buscar por Nome, CNPJ ou Cidade..." oninput="filtrarEmpresas()">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <select id="filtroEmpresaIso" class="form-select" onchange="filtrarEmpresas()">
+                            <option value="todos">Todos os status de certificação</option>
+                            <option value="sim">Apenas com certificação ISO 14000</option>
+                            <option value="nao">Apenas sem certificação</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="d-flex justify-content-between align-items-center mb-2 text-muted small">
-                <span>Mostrando: <strong id="contador-registros">0</strong> registro(s) de impacto</span>
-            </div>
+                <div class="d-flex justify-content-between align-items-center mb-2 text-muted small">
+                    <span>Mostrando: <strong id="contador-empresas">0</strong> organização(ões)</span>
+                </div>
 
-            <div class="table-responsive">
-                <table class="table table-hover align-middle border">
-                    <thead class="table-success">
-                        <tr>
-                            <th style="width: 60px;">ID</th>
-                            <th>Empresa</th>
-                            <th>Data</th>
-                            <th>Água (L)</th>
-                            <th>Energia (kWh)</th>
-                            <th>Res. Sólidos (kg)</th>
-                            <th>Res. Perigosos (kg)</th>
-                            <th>Ações de Mitigação</th>
-                            <th style="width: 140px;">Grau de Risco</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabela-registros">
-                        <!-- Preenchido via JS -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle border">
+                        <thead class="table-success">
+                            <tr>
+                                <th style="width: 80px;">ID</th>
+                                <th>Nome da Organização</th>
+                                <th>CNPJ</th>
+                                <th>Cidade / UF</th>
+                                <th style="width: 150px;">Certificação ISO</th>
+                                <th style="width: 90px;" class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-empresas">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section: Registros -->
+            <section id="registros" class="content-section" style="display: none;">
+                <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-3 border-bottom">
+                    <div>
+                        <h2 class="fw-bold text-success mb-1">
+                            <i class="bi bi-clipboard2-pulse me-2"></i>Registros de Impacto e Recursos
+                        </h2>
+                        <p class="text-muted mb-0">Medições de consumo hídrico, elétrico, resíduos e ações de mitigação.</p>
+                    </div>
+                    <div class="d-flex gap-2 mt-2 mt-md-0">
+                        <button class="btn btn-outline-secondary btn-sm" onclick="exportarRegistrosCSV()">
+                            <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar CSV
+                        </button>
+                        <button class="btn btn-success btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#modalRegistro">
+                            <i class="bi bi-plus-circle me-1"></i> Novo Registro
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Barra de Filtros de Registros -->
+                <div class="row g-2 mb-3 p-3 filter-bar">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text bg-transparent"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" id="filtroRegistroTexto" class="form-control" placeholder="Buscar por Ação de Mitigação..." oninput="filtrarRegistros()">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <select id="filtroRegistroEmpresa" class="form-select" onchange="filtrarRegistros()">
+                            <option value="todos">Filtrar por todas as empresas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-2 text-muted small">
+                    <span>Mostrando: <strong id="contador-registros">0</strong> registro(s) de impacto</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle border">
+                        <thead class="table-success">
+                            <tr>
+                                <th style="width: 60px;">ID</th>
+                                <th>Empresa</th>
+                                <th>Data</th>
+                                <th>Água (L)</th>
+                                <th>Energia (kWh)</th>
+                                <th>Res. Sólidos (kg)</th>
+                                <th>Res. Perigosos (kg)</th>
+                                <th>Ações de Mitigação</th>
+                                <th style="width: 140px;">Grau de Risco</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-registros">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
     </div>
 
+    <!-- =====================================================
+         MODAIS DE CADASTRO E DETALHES
+         ===================================================== -->
     <!-- Modal Nova Empresa -->
     <div class="modal fade" id="modalEmpresa" tabindex="-1">
         <div class="modal-dialog">
@@ -376,23 +390,19 @@
                     <form id="formEmpresa">
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Razão Social / Nome</label>
-                            <input type="text" class="form-control" id="empNome"
-                                placeholder="Ex: Agroindústria Goiás S.A." required>
+                            <input type="text" class="form-control" id="empNome" placeholder="Ex: Agroindústria Goiás S.A." required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">CNPJ</label>
-                            <input type="text" class="form-control" id="empCnpj" placeholder="00.000.000/0001-00"
-                                required>
+                            <input type="text" class="form-control" id="empCnpj" placeholder="00.000.000/0001-00" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Cidade em Goiás</label>
-                            <input type="text" class="form-control" id="empCidade"
-                                placeholder="Ex: Goiânia, Anápolis, Rio Verde" required>
+                            <input type="text" class="form-control" id="empCidade" placeholder="Ex: Goiânia, Anápolis, Rio Verde" required>
                         </div>
                         <div class="mb-3 form-check p-3 rounded border">
                             <input type="checkbox" class="form-check-input ms-0 me-2" id="empIso">
-                            <label class="form-check-label fw-semibold" for="empIso">Possui Certificação NBR ISO
-                                14000?</label>
+                            <label class="form-check-label fw-semibold" for="empIso">Possui Certificação NBR ISO 14000?</label>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -409,8 +419,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title fw-bold"><i class="bi bi-clipboard2-check me-2"></i>Lançar Métrica Ambiental
-                    </h5>
+                    <h5 class="modal-title fw-bold"><i class="bi bi-clipboard2-check me-2"></i>Lançar Métrica Ambiental</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -423,41 +432,27 @@
                         </div>
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold"><i
-                                        class="bi bi-droplet-half text-primary me-1"></i>Consumo de Água
-                                    (Litros)</label>
-                                <input type="number" step="0.01" class="form-control" id="regAgua" required value="0"
-                                    min="0">
+                                <label class="form-label fw-semibold"><i class="bi bi-droplet-half text-primary me-1"></i>Consumo de Água (Litros)</label>
+                                <input type="number" step="0.01" class="form-control" id="regAgua" required value="0" min="0">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold"><i
-                                        class="bi bi-lightning-charge text-warning me-1"></i>Energia Elétrica
-                                    (kWh)</label>
-                                <input type="number" step="0.01" class="form-control" id="regEnergia" required value="0"
-                                    min="0">
+                                <label class="form-label fw-semibold"><i class="bi bi-lightning-charge text-warning me-1"></i>Energia Elétrica (kWh)</label>
+                                <input type="number" step="0.01" class="form-control" id="regEnergia" required value="0" min="0">
                             </div>
                         </div>
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold"><i
-                                        class="bi bi-box-seam text-secondary me-1"></i>Resíduos Sólidos Comuns
-                                    (kg)</label>
-                                <input type="number" step="0.01" class="form-control" id="regSolidos" required value="0"
-                                    min="0">
+                                <label class="form-label fw-semibold"><i class="bi bi-box-seam text-secondary me-1"></i>Resíduos Sólidos Comuns (kg)</label>
+                                <input type="number" step="0.01" class="form-control" id="regSolidos" required value="0" min="0">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold"><i
-                                        class="bi bi-exclamation-triangle text-danger me-1"></i>Resíduos Perigosos /
-                                    Químicos (kg)</label>
-                                <input type="number" step="0.01" class="form-control" id="regPerigosos" required
-                                    value="0" min="0">
+                                <label class="form-label fw-semibold"><i class="bi bi-exclamation-triangle text-danger me-1"></i>Resíduos Perigosos / Químicos (kg)</label>
+                                <input type="number" step="0.01" class="form-control" id="regPerigosos" required value="0" min="0">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Ações de Mitigação e Melhoria Contínua (ISO
-                                14000)</label>
-                            <textarea class="form-control" id="regAcoes" rows="3"
-                                placeholder="Descreva as medidas mitigadoras (ex: sistema de reuso de água, instalação de placas fotovoltaicas, destinação para reciclagem)..."></textarea>
+                            <label class="form-label fw-semibold">Ações de Mitigação e Melhoria Contínua (ISO 14000)</label>
+                            <textarea class="form-control" id="regAcoes" rows="3" placeholder="Descreva as medidas mitigadoras (ex: sistema de reuso de água, instalação de placas fotovoltaicas, destinação para reciclagem)..."></textarea>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

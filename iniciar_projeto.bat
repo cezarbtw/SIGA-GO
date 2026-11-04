@@ -17,3 +17,4 @@ echo ===================================================
 echo [OK] Backend rodando em: http://127.0.0.1:8000/docs
 echo [OK] Frontend aberto com sucesso!
 echo ===================================================
+

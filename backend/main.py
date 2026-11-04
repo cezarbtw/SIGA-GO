@@ -1,5 +1,7 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import models
 from database import engine
 from routers import empresas, registros
@@ -13,26 +15,25 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configuração de CORS para permitir que o Frontend (React/HTML) consuma a API
-origins = [
-    "http://localhost",
-    "http://localhost:5173",  # Porta padrão do Vite
-    "http://localhost:8080",
-    "http://localhost:3000",
-]
-
+# Configuração de CORS permissiva para permitir requisições de file:/// e navegadores locais
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Para desenvolvimento, permitindo de qualquer origem
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Inclusão dos roteadores da API
 app.include_router(empresas.router)
 app.include_router(registros.router)
 
+# Rota de health check da API
+@app.get("/api/health")
+def api_health():
+    return {"status": "online", "mensagem": "SIGA-GO API operacional"}
 
-@app.get("/")
-def read_root():
-    return {"mensagem": "Bem-vindo à API do SIGA-GO (Gestão Ambiental)"}
+# Monta o frontend diretamente na raiz da aplicação (SPA)
+FRONTEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend"))
+if os.path.exists(FRONTEND_DIR):
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")

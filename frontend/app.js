@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = window.location.protocol.startsWith('http') ? window.location.origin : 'http://127.0.0.1:8000';
 
 // Estado global da aplicação
 let isDemoMode = false;
@@ -145,7 +145,7 @@ async function checkApiHealth() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-        const res = await fetch(`${API_URL}/`, { signal: controller.signal });
+        const res = await fetch(`${API_URL}/api/health`, { signal: controller.signal });
         clearTimeout(timeoutId);
 
         if (res.ok) {
@@ -196,9 +196,13 @@ function toggleDemoMode() {
     } else {
         if (banner) banner.style.display = 'none';
         if (btnText) btnText.innerText = 'Dados Demo';
-        showAlert('Conectando aos Web Services da API FastAPI local...', 'light');
         loadEmpresas();
         loadRegistros();
+        showAlert('Conectado com sucesso à API oficial do SIGA-GO!', 'success');
+        setTimeout(() => {
+            const c = document.getElementById('alert-container');
+            if (c) c.innerHTML = '';
+        }, 3000);
     }
 
     atualizarSeletores();
@@ -242,9 +246,14 @@ async function loadEmpresas() {
         allEmpresas = await res.json();
         atualizarSeletores();
         renderTabelaEmpresas(allEmpresas);
+        
+        // Limpa mensagens de erro ou carregamento
+        const alertBox = document.getElementById('alert-container');
+        if (alertBox && (alertBox.innerHTML.includes('Não foi possível') || alertBox.innerHTML.includes('Conectando'))) {
+            alertBox.innerHTML = '';
+        }
     } catch (err) {
         console.warn('Backend indisponível para empresas:', err);
-        // Se a API estiver offline e a lista estiver vazia, convida a ativar o modo Demo
         if (!isDemoMode && allEmpresas.length === 0) {
             showAlert('Não foi possível conectar à API local na porta 8000. Você pode clicar no botão <strong>"Dados Demo"</strong> no topo da página para testar a interface com dados de exemplo de Goiás!', 'warning');
         }

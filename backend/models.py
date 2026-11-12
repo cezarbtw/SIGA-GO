@@ -37,3 +37,4 @@ class RegistroImpacto(Base):
     acoes_mitigacao = Column(String, default="")
 
     empresa = relationship("Empresa", back_populates="registros_impacto")
+

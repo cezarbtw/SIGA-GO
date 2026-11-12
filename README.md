@@ -9,7 +9,8 @@
 [![SQLite](https://img.shields.io/badge/SQLite-Relacional-003B57.svg?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3.svg?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 [![Chart.js](https://img.shields.io/badge/Chart.js-Dinâmico-FF6384.svg?style=for-the-badge&logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)
-[![Status](https://img.shields.io/badge/Status-Concluído%20%2F%20APS%20UNIP-success.svg?style=for-the-badge)](https://github.com/cezarbtw/SIGA-GO)
+[![Status](https://img.shields.io/badge/Status-Concluído-success.svg?style=for-the-badge)](https://github.com/cezarbtw/SIGA-GO)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 <br>
 
@@ -20,7 +21,7 @@
   <a href="#-arquitetura-do-sistema">Arquitetura</a> •
   <a href="#-especificação-dos-web-services">Web Services</a> •
   <a href="#-como-executar">Como Executar</a> •
-  <a href="#-equipe-e-disciplina">Equipe</a>
+  <a href="#-autor">Autor</a>
 </p>
 
 ---
@@ -208,28 +209,26 @@ SIGA-GO/
 │   └── style.css                 # Estilos visuais personalizados e temas Dark/Light
 ├── docs/
 │   └── screenshots/              # Capturas de tela para documentação oficial
-├── generate_docx.py              # Script automatizado gerador do relatório acadêmico
+├── generate_docx.py              # Utilitário para geração de relatórios técnicos
 ├── iniciar_projeto.bat           # Executável de 1 clique para inicialização no Windows
-├── Relatorio_APS_SIGA_GO_UNIP.docx # Documento formal de entrega da APS (30+ páginas)
+├── Relatorio_APS_SIGA_GO_UNIP.docx # Documentação técnica detalhada do projeto
 └── README.md                     # Documentação oficial do projeto
 ```
 
 ---
 
-## 👥 Equipe e Disciplina
+## 👤 Autor
 
-Trabalho desenvolvido para a disciplina de **Atividades Práticas Supervisionadas (APS)** — 7º / 8º Semestre:
+Desenvolvido exclusivamente por **Abraão Cezar Inácio Leopoldino**.
 
-* **Instituição:** Universidade Paulista — UNIP
-* **Câmpus:** Goiânia - Flamboyant
-* **Curso:** Ciência da Computação
-* **Ano:** 2026
+[![GitHub](https://img.shields.io/badge/GitHub-cezarbtw-181717.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/cezarbtw)
+[![Email](https://img.shields.io/badge/Email-abraaocezarIL%40outlook.com-0078D4.svg?style=for-the-badge&logo=microsoftoutlook&logoColor=white)](mailto:abraaocezarIL@outlook.com)
 
-| Integrante | Registro Acadêmico (RA) |
-| :--- | :---: |
-| **Maria Luiza Marinho Melo** | `N346736` |
-| **Gabriel Oliveira do Nascimento** | `G773217` |
-| **Abraão Cezar Inácio Leopoldino** | `T457AD0` |
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença [MIT](LICENSE).
 
 ---
 

@@ -28,7 +28,7 @@
 
 </div>
 
-## 📌 Visão Geral
+##  Visão Geral
 
 O **SIGA-GO (Sistema de Informação de Gestão Ambiental - Goiás)** é uma solução computacional moderna e distribuída concebida para auxiliar organizações industriais, agroindústrias, cooperativas e entidades fiscalizadoras no estado de Goiás a monitorar, quantificar e auditar seus impactos ambientais com rigor e transparência.
 
@@ -41,9 +41,9 @@ O projeto foi desenvolvido sob as diretrizes normativas da família **NBR ISO 14
 
 ---
 
-## 📸 Demonstração Visual
+##  Demonstração Visual
 
-### 📊 Painel Analítico & Dashboard Executivo
+###  Painel Analítico & Dashboard Executivo
 Interface moderna com **Sidebar Retrátil (estilo TCM-GO)**, cards de métricas em tempo real, suporte nativo a **Dark Mode** e gráficos interativos via **Chart.js**:
 
 ![Dashboard SIGA-GO](docs/screenshots/dashboard.png)
@@ -57,22 +57,22 @@ Todos os endpoints RESTful implementados no backend são autodocumentados e test
 
 ---
 
-## ✨ Principais Recursos
+##  Principais Recursos
 
-### 🎨 Frontend Moderno (SPA — Single Page Application)
+###  Frontend Moderno (SPA — Single Page Application)
 * **Sidebar Lateral Retrátil (estilo TCM-GO):** Barra de navegação elegante em *Dark Slate* com alternador circular (`<` / `>`) que recolhe a barra para o modo compacto de ícones (72px) ou a expande (250px), adaptando os gráficos automaticamente.
 * **Dashboard Interativo com Chart.js:**
-  * 🍩 *Gráfico Donut:* Percentual de conformidade das empresas com a NBR ISO 14000.
-  * 📊 *Gráfico de Barras Verticais:* Balanço consolidado de insumos e resíduos no estado.
-  * 📈 *Gráfico Comparativo:* Ranking relativo de consumo de água e energia por organização.
+  *  *Gráfico Donut:* Percentual de conformidade das empresas com a NBR ISO 14000.
+  *  *Gráfico de Barras Verticais:* Balanço consolidado de insumos e resíduos no estado.
+  *  *Gráfico Comparativo:* Ranking relativo de consumo de água e energia por organização.
 * **Filtros e Busca Instantânea:** Busca textual dinâmica por Nome, CNPJ ou Cidade, combinada a filtros de status sem recarregamento da tela.
 * **Classificação de Risco Ambiental:** Etiquetas automáticas categorizando medições em *Alto Risco Químico*, *Médio Impacto* ou *Monitorado*.
 * **Modal de Histórico Individual:** Visualização detalhada do histórico de lançamentos e acumulados de cada empresa com 1 clique.
-* **🌙 Dark / Light Mode:** Alternância instantânea de tema com persistência automática no `localStorage`.
-* **📥 Exportação para Excel (CSV):** Exportação formatada com codificação `UTF-8 BOM` (`\uFEFF`) para compatibilidade perfeita com acentuação no Microsoft Excel.
-* **⚡ Modo Simulação (Dados Demo de Goiás):** Permite testar e apresentar a interface completa com empresas reais de Goiás mesmo se o servidor backend local estiver desligado.
+* ** Dark / Light Mode:** Alternância instantânea de tema com persistência automática no `localStorage`.
+* ** Exportação para Excel (CSV):** Exportação formatada com codificação `UTF-8 BOM` (`\uFEFF`) para compatibilidade perfeita com acentuação no Microsoft Excel.
+* ** Modo Simulação (Dados Demo de Goiás):** Permite testar e apresentar a interface completa com empresas reais de Goiás mesmo se o servidor backend local estiver desligado.
 
-### ⚙️ Backend & Web Services (FastAPI + SQLAlchemy)
+###  Backend & Web Services (FastAPI + SQLAlchemy)
 * **Arquitetura RESTful Stateless:** Endpoints sem retenção de estado, aderentes às restrições de Roy Fielding.
 * **Engenharia Defensiva de Dados:** Validações rigorosas com **Pydantic v2**, impedindo valores negativos (`ge=0`) e bloqueando duplicidade de CNPJs (retorno semântico `HTTP 400`).
 * **Mapeamento Objeto-Relacional (ORM):** Isolamento de transações SQL através do **SQLAlchemy**, blindando o sistema contra ataques de *SQL Injection*.
@@ -81,7 +81,7 @@ Todos os endpoints RESTful implementados no backend são autodocumentados e test
 
 ---
 
-## 🏛️ Arquitetura do Sistema
+##  Arquitetura do Sistema
 
 ```mermaid
 flowchart LR
@@ -118,7 +118,7 @@ flowchart LR
 
 ---
 
-## 🔌 Especificação dos Web Services
+##  Especificação dos Web Services
 
 | Método | Endpoint | Descrição | Status Sucesso | Erros Mapeados |
 | :---: | :--- | :--- | :---: | :---: |
@@ -134,7 +134,7 @@ flowchart LR
 
 ---
 
-## 🚀 Como Executar
+##  Como Executar
 
 ### Pré-requisitos
 * **Python 3.10 ou superior** instalado ([python.org](https://www.python.org/))
@@ -182,13 +182,13 @@ iniciar_projeto.bat
    ```
 
 5. **Acesse a aplicação:**
-   * 🌐 **Aplicação Web:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
-   * 📑 **Swagger UI:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-   * 📊 **OpenAPI JSON:** [http://127.0.0.1:8000/openapi.json](http://127.0.0.1:8000/openapi.json)
+   *  **Aplicação Web:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
+   *  **Swagger UI:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+   *  **OpenAPI JSON:** [http://127.0.0.1:8000/openapi.json](http://127.0.0.1:8000/openapi.json)
 
 ---
 
-## 📂 Estrutura de Diretórios
+##  Estrutura de Diretórios
 
 ```text
 SIGA-GO/
@@ -217,7 +217,7 @@ SIGA-GO/
 
 ---
 
-## 👤 Autor
+##  Autor
 
 Desenvolvido exclusivamente por **Abraão Cezar Inácio Leopoldino**.
 
@@ -226,7 +226,7 @@ Desenvolvido exclusivamente por **Abraão Cezar Inácio Leopoldino**.
 
 ---
 
-## 📄 Licença
+##  Licença
 
 Este projeto está sob a licença [MIT](LICENSE).
 

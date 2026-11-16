@@ -33,11 +33,11 @@
 O **SIGA-GO (Sistema de Informação de Gestão Ambiental - Goiás)** é uma solução computacional moderna e distribuída concebida para auxiliar organizações industriais, agroindústrias, cooperativas e entidades fiscalizadoras no estado de Goiás a monitorar, quantificar e auditar seus impactos ambientais com rigor e transparência.
 
 O projeto foi desenvolvido sob as diretrizes normativas da família **NBR ISO 14000 (com ênfase na ISO 14001:2015)** e na Política Nacional de Resíduos Sólidos (Lei nº 12.305/2010), alinhando o ciclo iterativo **PDCA (*Plan-Do-Check-Act*)** à medição precisa de:
-* 💧 **Consumo de Recursos Hídricos (Litros)**
-* ⚡ **Consumo de Energia Elétrica (kWh)**
-* 📦 **Geração de Resíduos Sólidos Recicláveis/Comuns (kg)**
-* ☣️ **Geração e Destinação de Resíduos Perigosos e Químicos (kg)**
-* ♻️ **Documentação de Ações Mitigatórias e Melhoria Contínua**
+*  **Consumo de Recursos Hídricos (Litros)**
+*  **Consumo de Energia Elétrica (kWh)**
+*  **Geração de Resíduos Sólidos Recicláveis/Comuns (kg)**
+*  **Geração e Destinação de Resíduos Perigosos e Químicos (kg)**
+*  **Documentação de Ações Mitigatórias e Melhoria Contínua**
 
 ---
 
@@ -85,13 +85,13 @@ Todos os endpoints RESTful implementados no backend são autodocumentados e test
 
 ```mermaid
 flowchart LR
-    subgraph Frontend["💻 Frontend (Cliente Web SPA)"]
+    subgraph Frontend[" Frontend (Cliente Web SPA)"]
         UI["Interface HTML5 / CSS3"]
         JS["app.js (Fetch API Assíncrono)"]
         Charts["Chart.js / Bootstrap 5.3"]
     end
 
-    subgraph Backend["⚙️ Backend (Web Services FastAPI)"]
+    subgraph Backend[" Backend (Web Services FastAPI)"]
         Uvicorn["Servidor ASGI (Uvicorn)"]
         Routers["Rotas REST (/empresas, /registros)"]
         Pydantic["Validação de Esquemas (Pydantic)"]
@@ -99,7 +99,7 @@ flowchart LR
         ORM["SQLAlchemy ORM"]
     end
 
-    subgraph Database["🗄️ Persistência Relacional"]
+    subgraph Database[" Persistência Relacional"]
         SQLite[("sigago.db (SQLite)")]
     end
 
